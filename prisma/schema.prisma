@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model aeropuertos {
+  id_aeropuerto     Int         @id @default(autoincrement())
+  nompre_aeropuerto String      @db.VarChar(50)
+  id_ubicacion      Int
+  ubicaciones       ubicaciones @relation(fields: [id_ubicacion], references: [id_ubicacion], onUpdate: Restrict, map: "IFU")
+
+  @@index([id_ubicacion], map: "IFU")
+}
+
+model ubicaciones {
+  id_ubicacion  Int           @id @default(autoincrement())
+  nombre_ciudad String        @db.VarChar(50)
+  codigo_postal String?       @db.VarChar(50)
+  aeropuertos   aeropuertos[]
+}
