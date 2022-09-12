@@ -9,8 +9,9 @@ datasource db {
 
 model aeropuertos {
   id_aeropuerto     Int         @id @default(autoincrement())
-  nompre_aeropuerto String      @db.VarChar(50)
+  nombre_aeropuerto String      @db.VarChar(50)
   id_ubicacion      Int
+  estado            String      @db.Char(1)
   ubicaciones       ubicaciones @relation(fields: [id_ubicacion], references: [id_ubicacion], onUpdate: Restrict, map: "IFU")
 
   @@index([id_ubicacion], map: "IFU")
@@ -20,5 +21,12 @@ model ubicaciones {
   id_ubicacion  Int           @id @default(autoincrement())
   nombre_ciudad String        @db.VarChar(50)
   codigo_postal String?       @db.VarChar(50)
+  estado        String        @db.Char(1)
   aeropuertos   aeropuertos[]
+}
+
+model accesos {
+  id_acceso   Int    @id @default(autoincrement())
+  usuario     String @db.VarChar(50)
+  contrasenia String @db.VarChar(50)
 }
