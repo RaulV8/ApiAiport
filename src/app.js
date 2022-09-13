@@ -7,5 +7,5 @@ app.use(express.json())
 app.use(aiportRoutes)
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`App listening on port ${port}`)
 })
