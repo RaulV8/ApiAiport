@@ -28,5 +28,5 @@ model ubicaciones {
 model accesos {
   id_acceso   Int    @id @default(autoincrement())
   usuario     String @db.VarChar(50)
-  contrasenia String @db.VarChar(50)
+  contrasenia String @db.VarChar(60)
 }

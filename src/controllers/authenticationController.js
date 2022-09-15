@@ -8,7 +8,7 @@ const loginUser = async (req, res) =>{
     const password = req.body.contrasenia
     const verify = await prisma.accesos.findMany({
         where:{
-            usuario: user
+            usuario: user 
         }
     })
     if(verify.length === 0){
@@ -16,8 +16,9 @@ const loginUser = async (req, res) =>{
             message : "Usuario o contraseña incorrecta"
         })
     }else{
-        if(compare(password, verify[0].contrasenia)){
-            jwt.sign({verify},"secretkey",{expiresIn: '120s'},(err,token)=>{
+        const validate = await compare(password, verify[0].contrasenia)
+        if(validate){
+            jwt.sign({verify},"secretkey",{expiresIn: '120s'},(error,token)=>{
                 res.json({
                     token: token
                 })

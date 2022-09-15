@@ -1,28 +1,45 @@
 const {Router} = require("express")
 const router = Router()
+const verification = Router()
+const jwt = require('jsonwebtoken')
 const {createAirport, createLocation, getData,updateAirport,updateLocation, deleteAirport, getDataAirport, getDataLocation} = require("../controllers/controller");
 const loginUser = require("../controllers/authenticationController")
 
-router.post('/location',verifyToken, createLocation)
-router.post('/airport',verifyToken, createAirport)
-router.get('/data',verifyToken,getData)
-router.get('/dataLocation',verifyToken,getDataLocation)
-router.get('/dataAirport',verifyToken,getDataAirport)
-router.put('/updateLocation/:id',verifyToken, updateLocation)
-router.put('/updateAirport/:id',verifyToken, updateAirport)
-router.patch('/deleteAirport/:id',verifyToken, deleteAirport)
+router.post('/location', verification, createLocation)
+router.post('/airport', verification,createAirport)
+router.get('/data',verification,getData)
+router.get('/dataLocation',verification,getDataLocation)
+router.get('/dataAirport',verification,getDataAirport)
+router.put('/updateLocation/:id',verification, updateLocation)
+router.put('/updateAirport/:id',verification, updateAirport)
+router.patch('/deleteAirport/:id',verification, deleteAirport)
 router.post('/login',loginUser)
 
-function verifyToken(req, res, next){
-    const bearerHeader =  req.headers['authorization'];
+verification.use((req, res, next) => {
+    let token = req.headers['x-access-token'] || req.headers['authorization']
 
-    if(typeof bearerHeader !== 'undefined'){
-         const bearerToken = bearerHeader.split(" ")[1];
-         req.token  = bearerToken;
-         next();
-    }else{
-        res.sendStatus(403);
+    if(!token){
+        res.sendStatus().send({
+            error: 'Es necesario un token de autenticacion'
+        })
+        return
     }
-}
+    const aux = token.split(" ")
+    if(aux[0] === 'Bearer'){
+        token = aux[1]
+    }
+    if(token){
+        jwt.verify(token, 'secretkey', (error, token) => {
+            if(error){
+                return res.json({
+                    message: 'El token no es valido'
+                })
+            }else{
+                req.token = token
+                next()
+            }
+        })
+    }
+})
 
 module.exports = router
