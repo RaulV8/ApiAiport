@@ -24,7 +24,7 @@ npm i
 
 ```
 cat .env
-DATABASE_URL="mysql://usuario:clave@localhost:3309/aeropuerto?schema=public"
+DATABASE_URL="mysql://usuario:clave@localhost:puerto/aeropuerto?schema=public"
 ```
 
 4. Se realiza la migración de prisma a la base de datos
