@@ -30,7 +30,7 @@ DATABASE_URL="mysql://usuario:clave@localhost:puerto/aeropuerto?schema=public"
 4. Se realiza la migración de prisma a la base de datos
 
 ```
-npx prisma migrate up --experimental
+npx prisma db push
 ```
 
 5. Ejecución del proyecto
