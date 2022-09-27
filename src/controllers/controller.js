@@ -10,7 +10,9 @@ const createAirport = async (req, res) => {
                 id_ubicacion: req.body.id_ubicacion          
             }
         })
-        res.sendStatus(200).json("Aeropuerto creado con exito.");   
+        res.send({
+            message: "Aeropuerto creado con exito."
+        });   
     } catch (error) {
         console.log(error)
     }
@@ -24,8 +26,8 @@ const createLocation = async (req, res) => {
             estado: "A"
         }
     })
-    res.sendStatus(200).json({
-        message: "Ubicacion creada con exito."
+    res.send({
+        message: "Ubicacion creada con exito"
     })
 }
 
@@ -68,7 +70,9 @@ const updateAirport = async (req, res) =>{
             id_ubicacion: req.body.id_ubicacion
         }
     })
-    res.json("Aeropuerto actualizado con exito.");
+    res.send({
+        message: "Aeropuerto actualizado con exito."
+    });
 }
 
 const updateLocation = async (req, res) =>{
@@ -81,7 +85,9 @@ const updateLocation = async (req, res) =>{
             codigo_postal: req.body.codigo_postal
         }
     })
-    res.json("Ubicacion actualizada con exito.");
+    res.send({
+        message: "Ubicacion actualizada con exito."
+    });
 }
 
 const deleteAirport = async (req, res) =>{
@@ -93,7 +99,9 @@ const deleteAirport = async (req, res) =>{
             estado: 'D'
         }
     })
-    res.json("Aeropuerto eliminado con exito.");
+    res.send({
+        message: "Aeropuerto eliminado con exito."
+    });
 }
 
 module.exports = {
